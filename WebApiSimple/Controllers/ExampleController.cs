@@ -1,6 +1,7 @@
 
 ﻿using Base.Domain.Interfaces.DbApp.ServiceInterface;
 using Base.Domain.Models.Example;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sieve.Models;
@@ -11,10 +12,11 @@ using System.Threading.Tasks;
 
 namespace WebApiSimple.Controllers
 {
-   // [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
-      
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class ExampleController : ControllerBase
     {
         private readonly IExampleService exampleService;

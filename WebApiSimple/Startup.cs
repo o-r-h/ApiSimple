@@ -80,21 +80,10 @@ namespace WebApiSimple
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = key,
                     ValidateAudience = false,
-                    ValidateIssuer = false
+                    ValidateIssuer = false,
+                    ClockSkew = System.TimeSpan.Zero
                 };
-                opt.Events = new JwtBearerEvents
-                {
-                    OnMessageReceived = context =>
-                    {
-                        var queryToken = context.Request.Query["token"].ToString();
-                        if (!string.IsNullOrEmpty(queryToken))
-                        {
-                            context.Token = queryToken;
-                        }
-
-                        return Task.CompletedTask;
-                    }
-                };
+                
             });
             #endregion Security Token Validation
 
@@ -195,7 +184,7 @@ namespace WebApiSimple
 
             app.UseAuthentication();
 
-            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {

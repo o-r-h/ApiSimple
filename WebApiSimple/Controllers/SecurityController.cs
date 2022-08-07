@@ -48,13 +48,7 @@ namespace WebApiSimple.Controllers
             return Ok(response);
         }
 
-        //[HttpPost("SendInviteMail")]
-        //public async Task<ActionResult> PutAsync(string email)
-        //{
-        //    var response = await securityService.SendInviteMailAsync(email);
-        //    return StatusCode((int)response.StatusCode, response.Current);
-        //}
-
+        
         [HttpPost("[action]/{token}")]
         [AllowAnonymous]
         public async Task<ActionResult> CheckPasswordRecoveryToken(Guid token)
@@ -95,6 +89,11 @@ namespace WebApiSimple.Controllers
         //    return StatusCode((int)result.StatusCode, result.Current);
         //}
 
-
+        //[HttpPost("SendInviteMail")]
+        //public async Task<ActionResult> PutAsync(string email)
+        //{
+        //    var response = await securityService.SendInviteMailAsync(email);
+        //    return StatusCode((int)response.StatusCode, response.Current);
+        //}
     }
 }

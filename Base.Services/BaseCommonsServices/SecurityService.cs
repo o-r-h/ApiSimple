@@ -359,7 +359,7 @@ namespace Base.Services.BaseCommonsServices
 
             var keygen = configuration.GetSection("Security").GetSection("KeyEncryption").Value;
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keygen));
-            var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(1);
 
             var tokenDescription = new SecurityTokenDescriptor

@@ -1,13 +1,15 @@
 
-for sqlserver
+#for sqlserver
 Scaffold-DbContext "Server=localhost;Database=BaseDB;User Id=sa;Password=123456;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities
 
-for pomelo
+#for pomelo
 Scaffold-DbContext "server=localhost;user=root;password=323904Orh!;database=db_windowbook_version_03" Pomelo.EntityFrameworkCore.MySql -OutputDir Migrations -Context "sqlContex" -f
 Scaffold-DbContext "server=wb-imd-dev.cvdfh8lhbaou.us-east-1.rds.amazonaws.com;user=admin;user=admin;password=ASDasd.123;database=imdtest" Pomelo.EntityFrameworkCore.MySql -OutputD
 
 
-Some thirdparty 
+#global error handle
 https://jasonwatmore.com/post/2022/01/17/net-6-global-error-handler-tutorial-with-example
 https://codewithmukesh.com/blog/global-exception-handling-in-aspnet-core/
+
+#Some thirdparty 
 https://github.com/Biarity/Sieve
