@@ -33,42 +33,7 @@ namespace Base.Infrastructure.Context
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
 
-            modelBuilder.Entity<Company>(entity =>
-            {
-                entity.ToTable("Company");
-
-                entity.Property(e => e.City).HasMaxLength(255);
-
-                entity.Property(e => e.CompanyStatusId).HasColumnName("CompanyStatusID");
-
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Email).HasMaxLength(255);
-
-                entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
-
-                entity.Property(e => e.Name).HasMaxLength(255);
-
-                entity.Property(e => e.PhoneNumber).HasMaxLength(255);
-
-                entity.Property(e => e.RegisterNumber).HasMaxLength(255);
-
-                entity.Property(e => e.Street).HasMaxLength(255);
-
-                entity.Property(e => e.ZipCode).HasMaxLength(255);
-
-                entity.HasOne(d => d.CompanyStatus)
-                    .WithMany(p => p.Companies)
-                    .HasForeignKey(d => d.CompanyStatusId)
-                    .HasConstraintName("FK_Company_CompanyStatus");
-            });
-
-            modelBuilder.Entity<CompanyStatus>(entity =>
-            {
-                entity.ToTable("CompanyStatus");
-
-                entity.Property(e => e.Name).HasMaxLength(50);
-            });
+          
 
             modelBuilder.Entity<Example>(entity =>
             {
