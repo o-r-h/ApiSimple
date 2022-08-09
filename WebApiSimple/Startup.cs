@@ -69,7 +69,10 @@ namespace WebApiSimple
             #endregion
 
 
-            services.AddAutoMapper(c => c.AddProfile<Mapper>());
+            //services.AddAutoMapper(c => c.AddProfile<Mapper>());
+            services.AddAutoMapper(c => c.AddProfile<Mapper>(), typeof(Startup));
+
+
 
             #region Security Token Validation
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Security:KeyEncryption")));

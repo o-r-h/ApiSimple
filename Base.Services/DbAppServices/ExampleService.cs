@@ -43,7 +43,15 @@ namespace Base.Services.DbAppServices
         public async Task Update(long idExample, ExampleModel exampleModel)
         {
             new ExampleValidator(exampleModel).ValidateAndThrowCustomException(exampleModel);
-            await exampleRepository.Create(mapper.Map<Example>(exampleModel));
+            await exampleRepository.Update(idExample, mapper.Map<Example>(exampleModel));
+        }
+
+
+
+        public async Task<Example> GetExample(long idExample)
+        {
+           
+            return await exampleRepository.GetExample(idExample);
         }
 
         public async Task <IEnumerable<ExampleModel>>GetAll()
@@ -68,20 +76,15 @@ namespace Base.Services.DbAppServices
                 return  CsvExport<Example>.WriteCsvToMemory(result, ";", System.Text.Encoding.UTF8);
         }
 
-        public async Task<IQueryable<Example>> GetPagination(SieveModel sieveModel)
-        {
-            IQueryable<Example> result = await exampleRepository.GetPagination();
-            return  sieveProcessor.Apply(sieveModel, result);
-        }
-
-
-        public async Task<IQueryable<ExampleModel>> GetPaginationModel(SieveModel sieveModel)
-        {
-            IQueryable<ExampleModel> result = mapper.Map<IQueryable<Example>, IQueryable<ExampleModel>>((IQueryable<Example>)await exampleRepository.GetAll());
-                return sieveProcessor.Apply(sieveModel, result);
-        }
+      
+		public IQueryable<ExampleModel> GetPagination(SieveModel sieveModel)
+		{
+            //IQueryable <ExampleModel> result = mapper.Map<IQueryable<Example>, IQueryable<ExampleModel>>((IQueryable<Example>) exampleRepository.GetAllIQueryable());
+            IQueryable<ExampleModel> result = exampleRepository.GetAllIQueryable();
+            return sieveProcessor.Apply(sieveModel, result);
+		}
 
 
 
-    }
+	}
 }

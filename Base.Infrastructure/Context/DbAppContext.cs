@@ -18,9 +18,9 @@ namespace Base.Infrastructure.Context
         {
         }
 
-        public virtual DbSet<Company> Companies { get; set; }
-        public virtual DbSet<CompanyStatus> CompanyStatuses { get; set; }
+      
         public virtual DbSet<Example> Examples { get; set; }
+   
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,9 +33,9 @@ namespace Base.Infrastructure.Context
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
 
-          
 
-            modelBuilder.Entity<Example>(entity =>
+
+           modelBuilder.Entity<Example>(entity =>
             {
                 entity.HasKey(e => e.IdExample);
 

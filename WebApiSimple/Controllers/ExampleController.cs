@@ -29,7 +29,13 @@ namespace WebApiSimple.Controllers
         }
 
 
-       
+        [HttpGet("GetExample")]
+        public async Task<IActionResult> GetExample( long idExample)
+        {
+            var response = await exampleService.GetExample(idExample);
+            return Ok(response);
+        }
+
 
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] ExampleModel example)
@@ -38,6 +44,15 @@ namespace WebApiSimple.Controllers
             return Ok(response);
         }
 
+
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update( long idExample, [FromBody] ExampleModel example)
+        {
+            await exampleService.Update(idExample, example);
+            return Ok();
+        }
+
+
         [HttpPost("Delete")]
         public async Task<IActionResult> Delete(long idExample)
         {
@@ -45,40 +60,15 @@ namespace WebApiSimple.Controllers
             return Ok();
         }
 
+        
+
+
         [HttpGet("Pagination")]
-        public async Task<IActionResult> Pagination(SieveModel sieveModel)
+        public  IActionResult Pagination(SieveModel sieveModel)
         {
-            try
-            {
-                var pageExampleModel = await exampleService.GetPagination(sieveModel);
-                return Ok(pageExampleModel.ToList());
-            }
-            catch (System.Exception ex)
-            {
-                var xxx = ex.Message;
-                throw new System.Exception();
-            }
-           
+            var pageExampleModel = exampleService.GetPagination(sieveModel);
+            return Ok(pageExampleModel.ToList());
         }
-
-
-        [HttpGet("PaginationModel")]
-        public async Task<IActionResult> PaginationModel(SieveModel sieveModel)
-        {
-            try
-            {
-                var pageExampleModel = await exampleService.GetPagination(sieveModel);
-                return Ok(pageExampleModel.ToList());
-            }
-            catch (System.Exception ex)
-            {
-                var xxx = ex.Message;
-                throw new System.Exception();
-            }
-
-        }
-
-
 
 
         [HttpGet("GetAll")]

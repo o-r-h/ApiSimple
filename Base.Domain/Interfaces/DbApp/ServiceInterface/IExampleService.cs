@@ -21,7 +21,12 @@ namespace Base.Domain.Interfaces.DbApp.ServiceInterface
 
         Task<IEnumerable<ExampleModel>> GetAll();
 
-        Task<IQueryable<Example>> GetPagination(SieveModel sieveModel);
+     
+
+        Task<Example> GetExample(long idExample);
+
+        IQueryable<ExampleModel> GetPagination(SieveModel sieveModel);
+
 
     }
 }

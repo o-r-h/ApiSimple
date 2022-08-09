@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Base.Domain.Entities.DbApp
 {
-    public partial class Example //: BaseEntity
+    public partial class Example 
     {
         [Sieve(CanFilter = true, CanSort = true)]
         public long IdExample { get; set; }
@@ -15,12 +15,12 @@ namespace Base.Domain.Entities.DbApp
         [Sieve(CanFilter = true, CanSort = true)]
         public decimal? PriceExample { get; set; }
         [Sieve(CanFilter = true, CanSort = true)]
-        public  DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
         [Sieve(CanFilter = true, CanSort = true)]
-        public  string CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         [Sieve(CanFilter = true, CanSort = true)]
-        public  DateTime? ModifiedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
         [Sieve(CanFilter = true, CanSort = true)]
-        public  string ModifiedBy { get; set; }
+        public string ModifiedBy { get; set; }
     }
 }

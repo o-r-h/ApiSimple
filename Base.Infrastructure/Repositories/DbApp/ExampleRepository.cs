@@ -1,5 +1,7 @@
-﻿using Base.Domain.Entities.DbApp;
+﻿using AutoMapper;
+using Base.Domain.Entities.DbApp;
 using Base.Domain.Interfaces.DbApp.RepositoryInterface;
+using Base.Domain.Models.Example;
 using Base.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Base.Infrastructure.Repositories.DbApp
 {
-    public class ExampleRepository :  IExampleRepository
+    public class ExampleRepository : IExampleRepository
     {
         private DbAppContext context;
 
-        public ExampleRepository(DbAppContext context) 
+        public ExampleRepository(DbAppContext context)
         {
             this.context = context;
         }
@@ -27,22 +29,44 @@ namespace Base.Infrastructure.Repositories.DbApp
 
         public async Task Update(long idExample, Example example)
         {
-            var exampleRecord = GetExample(idExample);
-            context.Entry(exampleRecord).State = EntityState.Detached;
-            context.Entry(example).State = EntityState.Modified;
-            await context.SaveChangesAsync();
+            var exampleRecord = context.Set<Example>().Find(idExample);
             
+            exampleRecord.NameExample = example.NameExample;
+            exampleRecord.IdExample = idExample;
+            exampleRecord.ModifiedBy = example.ModifiedBy;
+            exampleRecord.ModifiedAt = System.DateTime.Now;
+            exampleRecord.PriceExample = example.PriceExample;
+
+            context.Entry(exampleRecord).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+
         }
 
         public async Task<IEnumerable<Example>> GetAll()
         {
-            
-            return  await Task.Run(() =>  context.Set<Example>().ToListAsync() ); 
+
+            return await Task.Run(() => context.Set<Example>().ToListAsync());
+        }
+
+        public IQueryable<ExampleModel> GetAllIQueryable()
+        {
+
+            var query = from r in context.Examples select new ExampleModel {
+             CreatedAt = r.CreatedAt,
+             CreatedBy = r.CreatedBy,
+             IdExample = r.IdExample,
+             ModifiedAt = r.ModifiedAt,
+             ModifiedBy = r.ModifiedBy,
+             PriceExample = r.PriceExample,
+             NameExample = r.NameExample
+			};
+            return query;
         }
 
         public async Task<IQueryable<Example>> GetPagination()
         {
-        
+            
+
             return await Task.Run(() => context.Set<Example>().AsQueryable().AsNoTracking());
         }
 
@@ -61,6 +85,7 @@ namespace Base.Infrastructure.Repositories.DbApp
             
         }
 
+        
 
     }
 }
