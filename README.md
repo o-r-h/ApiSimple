@@ -6,7 +6,7 @@
 
 - [Repo](https://github.com/o-r-h/ApliSimple<project-name> "ApiSimple Repo")
 
-For running the app first create the two databases on SQLserver [BaseDB] [BaseExampleDB]  exceute the .sql scripts (are inside project folder 5) and remember to update the credentials on appSettings
+For running the app first create the two databases on SQLserver [BaseDB] [BaseExampleDB]  execute the .sql scripts (are inside project folder 5) and remember to update the credentials on appSettings
 
 ## Built With
 
