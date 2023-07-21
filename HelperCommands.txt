@@ -13,3 +13,6 @@ https://codewithmukesh.com/blog/global-exception-handling-in-aspnet-core/
 
 #Some thirdparty 
 https://github.com/Biarity/Sieve
+
+#Create app password on Gmail
+ https://myaccount.google.com/apppasswords 
