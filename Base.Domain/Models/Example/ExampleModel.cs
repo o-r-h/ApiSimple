@@ -10,8 +10,8 @@ namespace Base.Domain.Models.Example
     public class ExampleModel
     {
         [Sieve(CanFilter = true, CanSort = true)]
-        public long IdExample { get; set; }
-        [Sieve(CanFilter = true, CanSort = true)]
+        //public long IdExample { get; set; }
+        //[Sieve(CanFilter = true, CanSort = true)]
         public string NameExample { get; set; }
         [Sieve(CanFilter = true, CanSort = true)]
         public decimal? PriceExample { get; set; }

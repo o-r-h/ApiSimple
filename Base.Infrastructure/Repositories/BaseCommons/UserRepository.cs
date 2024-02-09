@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Threading.Tasks;
 
 namespace Base.Infrastructure.Repositories
@@ -109,16 +110,10 @@ namespace Base.Infrastructure.Repositories
             return objPrev;
         }
 
-        public Task<List<User>> GetByCompanyId(long companyId)
+      
+        public IQueryable<User> GetByFilter(UserFilter filter)
         {
-            var objPrev = (from iClass in context.Users where iClass.CompanyId == companyId select iClass).ToListAsync();
-            return objPrev;
-        }
-
-        public IQueryable<User> GetByFilter(UserFilter filter, long companyId)
-        {
-            var query = context.Users
-                .Where(x => x.CompanyId == companyId);
+            var query = context.Users.Select(x=>x);
 
             if (filter.UserId > 0)
             {
@@ -138,22 +133,8 @@ namespace Base.Infrastructure.Repositories
             return context.Users.Where(x => ids.Any(y => y == x.UserId)).ToListAsync();
         }
 
-        public async Task UpdatePasswordRecoveryToken(long userId, Guid token)
-        {
-            var user = await SelectByIdASync(userId);
-            if (user != null)
-            {
-                user.RecoveryToken = token;
-                user.TokenExpiration = DateTime.Now.AddHours(1);
-                await UpdateASync(userId,user);
-            }
-        }
-
-
-        public Task<User> GetByPasswordRecoveryToken(Guid token)
-        {
-            return context.Users.FirstOrDefaultAsync(x => x.RecoveryToken == token);
-        }
+    
+     
 
         public async Task<User> RejectedEmailInvitation(long userId)
         {

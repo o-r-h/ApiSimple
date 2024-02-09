@@ -66,11 +66,9 @@ namespace Base.Infrastructure.Context
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.Property(e => e.RecoveryToken)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+             
 
-                entity.Property(e => e.TokenExpiration).HasColumnType("datetime");
+              
 
                 entity.HasOne(d => d.Rol)
                     .WithMany(p => p.Users)

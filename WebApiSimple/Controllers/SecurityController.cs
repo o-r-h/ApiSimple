@@ -49,21 +49,7 @@ namespace WebApiSimple.Controllers
         }
 
         
-        [HttpPost("[action]/{token}")]
-        [AllowAnonymous]
-        public async Task<ActionResult> CheckPasswordRecoveryToken(Guid token)
-        {
-            var response = await securityService.GetUserEmailFromRecoveryToken(token);
-            return Ok(response);
-        }
-
-        [HttpPost("[action]")]
-        [AllowAnonymous]
-        public async Task<ActionResult> ResetPassword(UserResetPassword model)
-        {
-            var response = await securityService.ResetPassword(model);
-            return Ok(response);
-        }
+             
 
 
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Base.Domain.Entities.DbApp;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -23,9 +24,12 @@ namespace Base.Infrastructure.Context
    
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
+		{
+            optionsBuilder.LogTo(message => Debug.WriteLine(message), new[] { DbLoggerCategory.Database.Command.Name }, Microsoft.Extensions.Logging.LogLevel.Information);
+			optionsBuilder.EnableSensitiveDataLogging();
+			if (!optionsBuilder.IsConfigured)
             {
+
             }
         }
 

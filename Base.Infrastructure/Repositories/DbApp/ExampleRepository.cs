@@ -54,7 +54,7 @@ namespace Base.Infrastructure.Repositories.DbApp
             var query = from r in context.Examples select new ExampleModel {
              CreatedAt = r.CreatedAt,
              CreatedBy = r.CreatedBy,
-             IdExample = r.IdExample,
+           //  IdExample = r.IdExample,
              ModifiedAt = r.ModifiedAt,
              ModifiedBy = r.ModifiedBy,
              PriceExample = r.PriceExample,

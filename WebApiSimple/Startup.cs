@@ -27,6 +27,9 @@ using Base.Services.Helpers.ErrorHandler;
 using Sieve.Models;
 using Sieve.Services;
 using Base.Services.Helpers.Pagination;
+using System.IO;
+using System.Reflection;
+using System;
 
 namespace WebApiSimple
 {
@@ -116,7 +119,10 @@ namespace WebApiSimple
             string aditionalInfo = string.Format("Environment: {0}", this.env.EnvironmentName);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Web.Api", Version = "v1", Description = aditionalInfo });
+				var xfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+				var xpath = Path.Combine(AppContext.BaseDirectory, xfile);
+				c.IncludeXmlComments(xpath);
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Web.Api", Version = "v1", Description = aditionalInfo });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,

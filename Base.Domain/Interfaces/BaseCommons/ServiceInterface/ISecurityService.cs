@@ -13,11 +13,8 @@ namespace Base.Domain.Interfaces.BaseCommons.ServiceInterface
         Task<bool> AproveEmailIntivations(long userId);
         Task<long> DeleteUserAsync(long userId);
         string GenerateToken(SessionUserModel user);
-        Task<string> GetUserEmailFromRecoveryToken(Guid token);
-        Task<bool> RecoverPasswordFromEmail(string email);
         Task<SessionUserModel> RegisterNewUser(RegisterUser data);
         Task<bool> RejectedEmailInvitation(long userId);
-        Task<bool> ResetPassword(UserResetPassword model);
         Task<List<Tuple<string, string>>> SendInviteMailAsync(string emailInvite);
         void SendRegisterMail(SessionUserModel user);
         Task<User> UpdateUserInfo(long userId, UserInfoUpdate data);

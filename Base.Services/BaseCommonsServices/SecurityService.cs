@@ -61,10 +61,7 @@ namespace Base.Services.BaseCommonsServices
                     FirstName = userEntity.FirstName,
                     LastName = userEntity.LastName,
                     RolId = userEntity.RolId.Value,
-                    CompanyId = 0 ,
-                    CompanyName = "",
-                    CompanyEmail = "",
-                    RegisterNumber = ""
+                   
                 };
                 response.Token = GenerateToken(response);
          
@@ -93,13 +90,13 @@ namespace Base.Services.BaseCommonsServices
                 User newUser = new()
                 {
                     Password = Domain.Helpers.Encryptation.EncrpytationHelper.Encrypt(data.Password),
-                    CompanyId = 0,
+                 //   CompanyId = 0,
                     Email = data.Email,
                     FirstName = data.FirstName,
                     LastName = data.LastName,
-                    EmailConfirmed = false,
+                   // EmailConfirmed = false,
                     RolId = (long)BaseEnums.RolBase.Admin,
-                    AccessFailedCount = 0,
+                //    AccessFailedCount = 0,
                     UserLocked = 0,
                     UserStatusId = (long)BaseEnums.UserStatus.Active,
                     CreatedAt = DateTime.Now,
@@ -112,11 +109,8 @@ namespace Base.Services.BaseCommonsServices
                     Email = data.Email,
                     FirstName = data.FirstName,
                     LastName = data.LastName,
-                    RolId = (long)BaseEnums.RolBase.Admin,
-                    CompanyId = 0,
-                    CompanyName = data.CompanyName,
-                    CompanyEmail = data.CompanyEmail,
-                    RegisterNumber = data.CompanyRegisterNumber
+                    RolId = (long)BaseEnums.RolBase.Admin
+                    
                 };
                 response.Token = GenerateToken(response);
                 SendRegisterMail(response);
@@ -248,58 +242,18 @@ namespace Base.Services.BaseCommonsServices
 
         }
 
-        public async Task<bool> RecoverPasswordFromEmail(string email)
-        {
-            var user = await userRepository.GetByEmail(email);
-            if (user != null)
-            {
-                var token = Guid.NewGuid();
-                var url = $"{eMailConfiguration.HostUrl}/reset-password?token={token}";
-                await userRepository.UpdatePasswordRecoveryToken(user.UserId, token);
-                SendForgotPasswordEmail(email, url);
+       
 
-                return true;
-            }
-            throw new TaskCanceledException("This email does not exist");
-            
-        }
-
-        public async Task<string> GetUserEmailFromRecoveryToken(Guid token)
-        {
-            var user = await userRepository.GetByPasswordRecoveryToken(token);
-            if (user != null)
-            {
-                if (user.TokenExpiration < DateTime.Now)
-                {
-                    throw new TaskCanceledException("The token has expired");
-                }
-
-                return user.Email;
-            }
-
-            throw new TaskCanceledException("This token is not valid");
-        }
-
-        public async Task<bool> ResetPassword(UserResetPassword model)
+        public async Task<bool> ResetPassword(string email, string newPassword)
         {
           
               //  new UserResetPasswordValidator().ValidateAndThrowCustomException(model);
-                var userEntity = await userRepository.GetByPasswordRecoveryToken(model.Token);
+                var userEntity = await userRepository.GetByEmail(email);
 
-                if (userEntity == null)
-                {
-                throw new TaskCanceledException("This token is not valid");
-            }
-
-                if (userEntity.TokenExpiration < DateTime.Now)
-                {
-                throw new TaskCanceledException("The token has expired");
-            }
-
-                var newPass = Domain.Helpers.Encryptation.EncrpytationHelper.Encrypt(model.NewPassword);
+                var newPass = Domain.Helpers.Encryptation.EncrpytationHelper.Encrypt(newPassword);
 
                 userEntity.Password = newPass;
-                userEntity.TokenExpiration = DateTime.Now;
+               
                 return  await userRepository.UpdateASync(userEntity.UserId, userEntity) != null;
          
             
@@ -354,7 +308,7 @@ namespace Base.Services.BaseCommonsServices
             {
                 new Claim(ClaimTypes.Sid, $"{user.UserId}"),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim("CompanyId", $"{user.CompanyId}")
+    
             };
 
             var keygen = configuration.GetSection("Security").GetSection("KeyEncryption").Value;
@@ -398,8 +352,8 @@ namespace Base.Services.BaseCommonsServices
             var mailBody = System.IO.File.ReadAllText("assets/webtemplates/welcome.html");
             mailBody = mailBody
                 .Replace("[[BUTTON_URL]]", $"{eMailConfiguration.HostUrl}/login")
-                .Replace("[[UPGRADE_URL]]", $"{eMailConfiguration.HostUrl}/")
-                .Replace("[[APPCOMMERCIALNAME]]", $"{user.CompanyName}");
+                .Replace("[[UPGRADE_URL]]", $"{eMailConfiguration.HostUrl}/");
+               
 
             EMail.ThrowWithTemplate(new Message
             {

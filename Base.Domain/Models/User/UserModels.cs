@@ -51,21 +51,13 @@ namespace Base.Domain.Models.User
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public long CompanyId { get; set; }
-        public string RegisterNumber { get; set; }
-        public string CompanyName { get; set; }
-        public string CompanyEmail { get; set; }
+       
         public string Password { get; set; }
         public long UserStatusId { get; set; }
         public string Token { get; set; }
     }
 
-    public class UserResetPassword
-    {
-        public Guid Token { get; set; }
-        public string NewPassword { get; set; }
-    }
-
+    
 
     public class UserInfoPassword
     {
